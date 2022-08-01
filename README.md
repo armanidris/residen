@@ -1,2 +1,2 @@
 # residen
-Repo for webapp residen bedah
+Online repo for webapp residen bedah
