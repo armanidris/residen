@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Intranet;
-use App\Http\Controllers\Login;
+use App\Http\Controllers\LoginController;
+
 
 
 /*
@@ -17,4 +19,7 @@ use App\Http\Controllers\Login;
 */
 
 Route::get('/', [Intranet::class,'index']);
-Route::post('/login', [Login::class,'index']);
+Route::get('/login', [LoginController::class,'index'])->name('login')->middleware('guest');
+Route::post('/logout', [LoginController::class,'logout']);
+Route::post('/login', [LoginController::class,'authenticate']);
+Route::get('/dashboard',[AdminController::class,'index'])->middleware('auth');
