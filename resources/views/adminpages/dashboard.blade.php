@@ -6,7 +6,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <title>Sistem Informasi Residen Bagian Bedah FK-UH</title>
     <!-- Favicon-->
-    <link rel="icon" href="/assets/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 
     <!-- Google Fonts -->
     <!--<link href="/assets/fonts/roboto.css" rel="stylesheet" type="text/css">-->
@@ -33,10 +33,10 @@
 
     <!-- Bootstrap Select Css -->
     <link href="/assets/plugins/bootstrap-select/css/bootstrap-select.css" rel="stylesheet" />
-	<?php if (isset($datatable)) { ?>
+	
      <!-- JQuery DataTable Css -->
     <link href="/assets/plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css" rel="stylesheet">
-	<?php } ?>
+	
     <!-- Custom Css -->
     <link href="/assets/css/style.css" rel="stylesheet">
 
@@ -70,7 +70,12 @@
     <nav class="navbar">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/"> Sistem Informasi Residen Bedah FK-UH</a>
+                <a class="navbar-brand" style="padding-right: 0;" href="/"> <img src="/assets/images/logo_unhas.png" height="28" alt=""></a>
+            </div>
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars"></a>
+                <a class="navbar-brand">Sistem Informasi Residen Bedah Unhas</a>
             </div>
         </div>
     </nav>
@@ -81,14 +86,17 @@
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="/assets/images/user.png" width="48" height="48" alt="User" />
+                    <img src="{{ asset('storage/'.auth()->user()->file_foto)  }}" width="48" height="48" alt="User" />
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name }}</div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="javascript:void(0);"><i class="material-icons">input</i>Logout</a></li>
+                            <li><a href="/profile/{{ session('iduser') }}"><i class="material-icons">person</i>My Profile</a>
+                            <li><a href="/password/{{ session('iduser') }}"><i class="material-icons">lock</i>Ganti password</a>
+                            <li role="separator" class="divider"></li>
+                            <li><a data-toggle="modal" data-target="#defaultModal"><i class="material-icons">input</i>Logout</a></li>
                         </ul>
                     </div>
                 </div>
@@ -105,7 +113,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/index.php/residen">
+                        <a href="/residen">
                             <i class="material-icons">account_box</i>
                             <span>Residen</span>
                         </a>
@@ -119,24 +127,23 @@
 					<p><br /><br /></p>
 					<li class="header">Settings</li>
                      <li>
-                        <a href="/index.php/pembimbing">
+                        <a href="/mpembimbing">
                             <i class="material-icons">school</i>
                             <span>Pembimbing</span>
                         </a>
                     </li>
                      <li>
-                        <a href="/index.php/mstase">
+                        <a href="/mstase">
                             <i class="material-icons">account_balance</i>
                             <span>Tempat Stase</span>
                         </a>
                     </li>
                     <li class="header"></li>
-                    <li><a href="/logout"><i class="material-icons">logout</i>
+                    <li>
+                        <a data-toggle="modal" data-target="#defaultModal">
+                            <i class="material-icons">logout</i>
                             <span>Logout</span>
                         </a>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-default waves-effect m-r-20" data-toggle="modal" data-target="#defaultModal">MODAL - DEFAULT SIZE</button>
                     </li>
                 
 				</ul>
@@ -157,17 +164,11 @@
     </section>
 
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>BLANK PAGE</h2>
-				<i class="fa fa-home"></i>
-            </div>
-        </div>
-    </section>
+    @yield('container')
 
+    
 
-            <!-- Default Size -->  
+            <!-- Modal for logout  -->  
             <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -177,13 +178,18 @@
                         <div class="modal-body">
                             Apakah Anda yakin akan logout?
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <div class="modal-footer">
+                                <button type="reset" class="btn btn-success waves-effect" data-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-danger waves-effect">Logout</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
+
+
 
     <!-- Bootstrap Core Js -->
     <script src="/assets/plugins/bootstrap/js/bootstrap.js"></script>

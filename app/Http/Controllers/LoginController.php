@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -20,9 +22,11 @@ class LoginController extends Controller
         ]);
 
         
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->remember)) {
             $request->session()->regenerate();
 
+            $request->session()->put('iduser', Crypt::encryptString(auth()->user()->id)) ;
+            
             return redirect()->intended('dashboard');
         }
         

@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use Illuminate\Support\Facades\Route;
+// use App\Models\User;
 use App\Http\Controllers\Intranet;
+use App\Http\Controllers\UserProfile;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
-
-
+use App\Http\Controllers\MasterController;
+use App\Http\Controllers\ResidenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +25,33 @@ Route::get('/login', [LoginController::class,'index'])->name('login')->middlewar
 Route::post('/logout', [LoginController::class,'logout']);
 Route::post('/login', [LoginController::class,'authenticate']);
 Route::get('/dashboard',[AdminController::class,'index'])->middleware('auth');
+
+Route::get('/profile/{encid}',[UserProfile::class,'index'])->middleware('auth');
+Route::post('/profile/{encid}',[UserProfile::class,'update_profile'])->middleware('auth');
+
+Route::get('/password/{encid}',[UserProfile::class,'pass_main'])->middleware('auth');
+Route::post('/password/{encid}',[UserProfile::class,'pass_update'])->middleware('auth');
+
+Route::get('/mstase',[MasterController::class,'stase_index'])->middleware('auth');
+Route::get('/mstase/create',[MasterController::class,'stase_create'])->middleware('auth');
+Route::post('/mstase/create',[MasterController::class,'stase_store'])->middleware('auth');
+Route::get('/mstase/edit/{id}',[MasterController::class,'stase_edit'])->middleware('auth');
+Route::post('/mstase/edit/{id}',[MasterController::class,'stase_update'])->middleware('auth');
+Route::post('/mstase/destroy/{id}',[MasterController::class,'stase_destroy'])->middleware('auth');
+
+Route::get('/mpembimbing',[MasterController::class,'pembimbing_index'])->middleware('auth');
+Route::get('/mpembimbing/create',[MasterController::class,'pembimbing_create'])->middleware('auth');
+Route::post('/mpembimbing/create',[MasterController::class,'pembimbing_store'])->middleware('auth');
+Route::get('/mpembimbing/edit/{id}',[MasterController::class,'pembimbing_edit'])->middleware('auth');
+Route::post('/mpembimbing/edit/{id}',[MasterController::class,'pembimbing_update'])->middleware('auth');
+Route::post('/mpembimbing/destroy/{id}',[MasterController::class,'pembimbing_destroy'])->middleware('auth');
+
+Route::get('/residen',[ResidenController::class,'index'])->middleware('auth');
+Route::get('/residen/{id}',[ResidenController::class,'show'])->middleware('auth');
+Route::get('/residen/makalah/create/{id}',[ResidenController::class,'makalah_create'])->middleware('auth');
+Route::post('/residen/makalah/create/{id}',[ResidenController::class,'makalah_store'])->middleware('auth');
+Route::get('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_edit'])->middleware('auth');
+Route::post('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_update'])->middleware('auth');
+
+
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class AdminController extends Controller
 {
@@ -13,7 +14,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('adminpages/dashboard');
+        $iduser = Crypt::encryptString(auth()->user()->id);
+        return view('adminpages/dashboard',['iduser'=>$iduser]);
     }
 
     /**
