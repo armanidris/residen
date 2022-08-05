@@ -27,7 +27,6 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th width=61></th>
                                                 <th>#</th>
                                                 <th>Jenis Makalah</th>
                                                 <th>Judul</th>
@@ -35,12 +34,12 @@
                                                 <th>Tanggal Baca</th>
                                                 <th>Berita Acara</th>
                                                 <th>Pembimbing</th>
+                                                <th width=61></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach ($vmakalah as $row)
                                             <tr>
-                                                <td><a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a></td>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $row->makalah_type }}</td>
                                                 <td>{{ $row->judul }}</td>
@@ -61,10 +60,17 @@
                                                     <label for="makalah"><?=$row->bap_makalah=="1"?"Ada":"Tidak";?></label>
                                                 </td>
                                                 <td>{{ $row->nama_pembimbing }}</td>
+                                                <td>
+                                                    <a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 
+                                                    <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
                                     </table>
+                                    <a href="/residen/makalah/create/{{$row->res_id}}">
+                                        <button class="btn btn-sm bg-purple"><i class="fa fa-plus"></i></button>
+                                    </a>
                                 </div>
                             </div>
                             </div>
@@ -76,7 +82,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h2><i class="fa fa-edit"></i> Tambah / Ubah Data Makalah</h2>
+                                <h2><i class="fa fa-edit"></i> Ubah Data Makalah</h2>
                             </div>
                             <div class="body">
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
@@ -172,5 +178,4 @@
         </section>
     
     
-    @endsection
-    
+    @endsection 

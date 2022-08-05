@@ -4,7 +4,7 @@
 <section class="content">
     <div class="col-sm-12">
         <ol class="breadcrumb breadcrumb-bg-brown">
-            <li><a href="'/index.php/residen/"><i class="fa fa-list"></i> Daftar Residen</a></li>
+            <li><a href="/residen/"><i class="fa fa-list"></i> Daftar Residen</a></li>
         </ol>
     </div>
     </section>
@@ -108,7 +108,7 @@
 								<table class="table table-bordered table-striped table-hover">
 									<thead>
 										<tr>
-											<th width="62px"></th>
+											<th></th>
 											<th>#</th>
 											<th>Jenis Makalah</th>
 											<th>Judul</th>
@@ -123,7 +123,7 @@
 										<tr>
 											<td>
 												{{-- <a href="<?= base_url('/index.php/residen/makalah/'.sha1($mrow->res_id)."/edit/".$mrow->makalah_id); ?>" title="Edit"><i class="fa fa-edit"></i></a> | <a href="<?= base_url('/index.php/residen/makalah/delete/'.sha1($mrow->makalah_id).'/'.sha1($mrow->res_id)); ?>"><i class="fa fa-trash" title="Delete"></i></a> --}}
-												<a href="/residen/makalah/edit/{{ $mrow->res_id }}/{{ $mrow->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+												<a href="/residen/makalah/edit/{{ $mrow->res_id }}/{{ $mrow->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a>
 											</td>
 											<td>{{ $loop->iteration }}</td>
 											<td>{{ $mrow->makalah_type }}</td>
@@ -170,7 +170,7 @@
 								<table class="table table-bordered table-striped table-hover">
 									<thead>
 										<tr>
-											<th width="62px"></th>
+											<th width="30"></th>
 											<th>#</th>
 											<th>Kursus</th>
 											<th>Tempat</th>
@@ -181,10 +181,7 @@
 									@foreach ($kursus as $krow)
 										<tr>
 											<td>
-												{{-- <a href="<?= base_url('/index.php/residen/kursus/'.sha1($krow->res_id)."/edit/".$krow->kursus_id); ?>" title="Edit"><i class="fa fa-edit"></i></a> |  --}}
-												{{-- <a href="<?= base_url('/index.php/residen/kursus/delete/'.sha1($krow->kursus_id).'/'.sha1($krow->res_id)); ?>"><i class="fa fa-trash" title="Delete"></i></a> --}}
-												<a href="" title="Edit"><i class="fa fa-edit"></i></a> | 
-												<a href=""><i class="fa fa-trash" title="Delete"></i></a>
+												<a href="/residen/kursus/edit/{{ $krow->res_id }}/{{ $krow->kursus_id }}" title="Edit"><i class="fa fa-edit"></i></a>
 											</td>
 											<td>{{ $loop->iteration }}</td>
 											<td>{{ $krow->kursus_name }}</td>
@@ -203,7 +200,7 @@
 									@endforeach
 									</tbody>
 								</table>
-									<a href="">
+									<a href="/residen/kursus/create/{{$res[0]->res_id}}">
 									<button class="btn btn-sm bg-pink"><i class="fa fa-plus"></i></button>
 									</a>
 							</div>
@@ -225,7 +222,7 @@
 								<table class="table table-bordered table-striped table-hover">
 									<thead>
 										<tr>
-											<th width="62px"></th>
+											<th width="30"></th>
 											<th>#</th>
 											<th>Ujian</th>
 											<th>Tempat</th>
@@ -237,8 +234,7 @@
 									@foreach ($ujian as $urow)
 										<tr>
 											<td>
-												{{-- <a href="<?= base_url('/index.php/residen/ujian/'.sha1($urow->res_id)."/edit/".$urow->ujian_id); ?>" title="Edit"><i class="fa fa-edit"></i></a> | <a href="<?= base_url('/index.php/residen/ujian/delete/'.sha1($urow->ujian_id).'/'.sha1($urow->res_id)); ?>"><i class="fa fa-trash" title="Delete"></i></a> --}}
-												<a href="" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+												<a href="/residen/ujian/edit/{{ $urow->res_id }}/{{ $urow->ujian_id }}" title="Edit"><i class="fa fa-edit"></i></a>
 											</td>
 											<td>{{ $loop->iteration }}</td>
 											<td>{{ $urow->ujian_name }}</td>
@@ -252,7 +248,7 @@
 									@endforeach
 									</tbody>
 								</table>
-									<a href="">
+									<a href="/residen/ujian/create/{{$res[0]->res_id}}">
 									<button class="btn btn-sm bg-indigo"><i class="fa fa-plus"></i></button>
 									</a>
 							</div>
@@ -275,7 +271,7 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th width="62px"></th>
+                                                <th width="30"></th>
                                                 <th>#</th>
                                                 <th>Stase</th>
                                                 <th>Tanggal</th>
@@ -286,8 +282,7 @@
                                         @foreach ($stase as $srow)
                                             <tr>
                                                 <td>
-                                                    {{-- <a href="<?= base_url('/index.php/residen/stase/'.sha1($srow->res_id)."/edit/".$srow->stase_id); ?>" title="Edit"><i class="fa fa-edit"></i></a> | <a href="<?= base_url('/index.php/residen/ujian/delete/'.sha1($srow->stase_id).'/'.sha1($urow->res_id)); ?>"><i class="fa fa-trash" title="Delete"></i></a> --}}
-                                                    <a href="" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+                                                    <a href="" title="Edit"><i class="fa fa-edit"></i></a>
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td> {{  $srow->lokasi_stase }}</td>
@@ -296,8 +291,7 @@
                                         @endforeach
                                         </tbody>
                                     </table>
-                                        {{-- <a href="<?=base_url('/index.php/residen/stase/'.$this->uri->segment(3).'/add');?>"> --}}
-                                        <a href="">
+                                        <a href="/residen/stase/create/{{$res[0]->res_id}}">
                                         <button class="btn btn-sm bg-grey"><i class="fa fa-plus"></i></button>
                                         </a>
                                 </div>

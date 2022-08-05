@@ -166,8 +166,6 @@
 
     @yield('container')
 
-    
-
             <!-- Modal for logout  -->  
             <div class="modal fade" id="defaultModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
@@ -235,5 +233,7 @@
 	
     <!-- Demo Js -->
     <script src="/assets/js/demo.js"></script>
+
+    yield('lastScipt')
 </body>
 </html>

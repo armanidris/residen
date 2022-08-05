@@ -27,7 +27,6 @@
                                     <table class="table table-bordered table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>#</th>
                                                 <th>Jenis Makalah</th>
                                                 <th>Judul</th>
@@ -35,12 +34,12 @@
                                                 <th>Tanggal Baca</th>
                                                 <th>Berita Acara</th>
                                                 <th>Pembimbing</th>
+                                                <th width="61"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         @foreach ($vmakalah as $row)
                                             <tr>
-                                                <td><a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a></td>
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $row->makalah_type }}</td>
                                                 <td>{{ $row->judul }}</td>
@@ -61,6 +60,7 @@
                                                     <label for="makalah"><?=$row->bap_makalah=="1"?"Ada":"Tidak";?></label>
                                                 </td>
                                                 <td>{{ $row->nama_pembimbing }}</td>
+                                                <td><a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a></td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -76,23 +76,9 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header">
-                                <h2><i class="fa fa-edit"></i> Tambah / Ubah Data Makalah</h2>
+                                <h2><i class="fa fa-edit"></i> Tambah Data Makalah</h2>
                             </div>
                             <div class="body">
-                                
-                                <?php
-                                /*
-                                    if (isset($makalah)) {
-                                        foreach ($makalah as $mrow);
-                                    }
-                                    //print_r($res_id);
-                                    if (isset($res_id)) {
-                                        $res_id=$res_id[0]->res_id;
-                                    } else {
-                                        $res_id=$mrow->res_id;
-                                    }
-                                    */
-                                ?>
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                                     @csrf
                                 <input type="hidden" name="makalah_id" value="">
