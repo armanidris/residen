@@ -8,7 +8,7 @@
         </ol>
     </div>
     </section>
-    
+
         <section class="content">
             <div class="container-fluid">
                 <div class="row clearfix">
@@ -18,7 +18,6 @@
                     <div class="col-xs-12">
 
                         @include('adminpages.residen.success_alert')
-
                     
                     <div class="card">
                         <div class="header bg-grey">
@@ -51,6 +50,9 @@
                                         @endforeach
                                         </tbody>
                                     </table>
+                                    <a href="/residen/stase/create/{{ $vsrow->res_id }}">
+                                        <button class="btn btn-sm bg-grey"><i class="fa fa-plus"></i></button>
+                                        </a>
                                 </div>
                             </div>
                             </div>
@@ -67,7 +69,7 @@
                                 <div class="body">
                                 <form class="form-horizontal" method="post" enctype="multipart/form-data">
                                     @csrf
-                                <input type="hidden" name="stase_id" value="">
+                                <input type="hidden" name="stase_id" value="{{ $sdet[0]->stase_id }}">
                                 <input type="hidden" name="res_id" value="{{ session('res_id') }}">
                                     <div class="row clearfix">
                                         <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -78,7 +80,9 @@
                                                 <select class="form-control show-tick" name="lokasi_id"  data-live-search="true" data-size="5">
                                                     <option style="margin-left:20px;" value="">-- Please select --</option>
                                                     @foreach ($tempat_stase as $tsrow)
-                                                    <option  style="margin-left:20px;" value="{{ $tsrow->lokasi_id }}">{{ $tsrow->lokasi_stase }}</option>
+                                                    <option  style="margin-left:20px;" value="{{ $tsrow->lokasi_id }}"
+                                                        {{ old('lokasi_id',$sdet[0]->lokasi_id) == $tsrow->lokasi_id ? "selected" : "" }}
+                                                    >{{ $tsrow->lokasi_stase }}</option>
                                                     @endforeach
                                                 </select>													
                                             </div>
@@ -94,14 +98,14 @@
                                         <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                                 <div class="input-daterange input-group" id="bs_datepicker_range_container">
                                                     <div class="form-line">
-                                                        <input autocomplete="off" type="text"  name="mulai" class="form-control" placeholder="Tanggal mulai..." value="{{ old('mulai') }}">
+                                                        <input autocomplete="off" type="text"  name="mulai" class="form-control" placeholder="Tanggal mulai..." value="{{ old('mulai',date('d F Y',strtotime($sdet[0]->mulai))) }}">
                                                     </div>
                                                     @error('mulai')
                                                         <small><p class="col-pink">{{ $message }}</p></small>
                                                     @enderror
                                                     <span class="input-group-addon">to</span>
                                                     <div class="form-line">
-                                                        <input autocomplete="off" type="text" name="selesai" class="form-control" placeholder="Tanggal selesai..." value="{{ old('selesai') }}">
+                                                        <input autocomplete="off" type="text" name="selesai" class="form-control" placeholder="Tanggal selesai..." value="{{ old('selesai',date('d F Y',strtotime($sdet[0]->selesai))) }}">
                                                     </div>
                                                     @error('selesai')
                                                         <small><p class="col-pink">{{ $message }}</p></small>
@@ -122,7 +126,7 @@
             </div>
         </section>
     
-@include('adminpages.residen.delconf',['action'=>'stase','itemname'=>'stase_id'])
+        @include('adminpages.residen.delconf',['action'=>'stase','itemname'=>'stase_id'])
 
-    @endsection
-                    
+@endsection
+

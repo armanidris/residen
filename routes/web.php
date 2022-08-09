@@ -48,27 +48,28 @@ Route::post('/mpembimbing/destroy/{id}',[MasterController::class,'pembimbing_des
 
 Route::get('/residen',[ResidenController::class,'index'])->middleware('auth');
 Route::get('/residen/{id}',[ResidenController::class,'show'])->middleware('auth');
+Route::get('/residen/edit/{id}',[ResidenController::class,'edit'])->middleware('auth');
+
 Route::get('/residen/makalah/create/{id}',[ResidenController::class,'makalah_create'])->middleware('auth');
 Route::post('/residen/makalah/create/{id}',[ResidenController::class,'makalah_store'])->middleware('auth');
 Route::get('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_edit'])->middleware('auth');
 Route::post('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_update'])->middleware('auth');
-Route::get('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_edit'])->middleware('auth');
-Route::post('/residen/makalah/edit/{id}/{mid}',[ResidenController::class,'makalah_update'])->middleware('auth');
-Route::get('/residen/makalah/delete',[ResidenController::class,'makalah_destroy'])->middleware('auth');
+Route::post('/residen/makalah/delete',[ResidenController::class,'makalah_destroy'])->middleware('auth');
 
 Route::get('/residen/kursus/create/{id}',[ResidenController::class,'kursus_create'])->middleware('auth');
 Route::post('/residen/kursus/create/{id}',[ResidenController::class,'kursus_store'])->middleware('auth');
 Route::get('/residen/kursus/edit/{id}/{mid}',[ResidenController::class,'kursus_edit'])->middleware('auth');
 Route::post('/residen/kursus/edit/{id}/{mid}',[ResidenController::class,'kursus_update'])->middleware('auth');
+Route::post('/residen/kursus/delete',[ResidenController::class,'kursus_destroy'])->middleware('auth');
 
 Route::get('/residen/ujian/create/{id}',[ResidenController::class,'ujian_create'])->middleware('auth');
 Route::post('/residen/ujian/create/{id}',[ResidenController::class,'ujian_store'])->middleware('auth');
 Route::get('/residen/ujian/edit/{id}/{ujid}',[ResidenController::class,'ujian_edit'])->middleware('auth');
 Route::post('/residen/ujian/edit/{id}/{ujid}',[ResidenController::class,'ujian_update'])->middleware('auth');
+Route::post('/residen/ujian/delete',[ResidenController::class,'ujian_destroy'])->middleware('auth');
 
 Route::get('/residen/stase/create/{id}',[ResidenController::class,'stase_create'])->middleware('auth');
 Route::post('/residen/stase/create/{id}',[ResidenController::class,'stase_store'])->middleware('auth');
 Route::get('/residen/stase/edit/{id}/{ujid}',[ResidenController::class,'stase_edit'])->middleware('auth');
 Route::post('/residen/stase/edit/{id}/{ujid}',[ResidenController::class,'stase_update'])->middleware('auth');
-
-
+Route::post('/residen/stase/delete',[ResidenController::class,'stase_destroy'])->middleware('auth');

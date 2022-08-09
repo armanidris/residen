@@ -22,7 +22,6 @@
                                 <dl class="dl-horizontal">
                                     <dt></dt>
                                     <dd>
-                                        {{-- <img src="/assets/images/foto/<?=$data->file_foto;?>" class="img-rounded" style="width:90px; height:120; border:solid 1px;"> --}}
                                         <img src="/assets/images/foto/{{ $res[0]->file_foto }}" class="img-rounded" style="width:90px; height:120; border:solid 1px;">
                                     </dd>
                                     <p><br></p>
@@ -30,7 +29,7 @@
                                     <dt>Nama</dt>
                                     <dd>
                                        {{$res[0]->res_name}}
-                                        <a style="margin-left: 50px;" href="/residen/edit/>"><i class="fa fa-edit"></i></a>
+                                        <a style="margin-left: 50px;" href="/residen/edit/{{ Request::segment(2) }}"><i class="fa fa-edit"></i></a>
                                         <a target="_blank" href="/print_pdf/create_pdf/"><i class="fa fa-print"></i></a>
                                     </dd>
                                     <?php //$this->session->set_userdata('res_name',$data->res_name);?>

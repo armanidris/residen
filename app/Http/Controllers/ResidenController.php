@@ -33,8 +33,14 @@ class ResidenController extends Controller
         $stase = DB::table('stase')
                 ->join('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
                 ->where('res_id',$id)->get();
-        // ddd($res);
          return view('adminpages.residen.detail',['res'=>$res,'makalah'=>$makalah,'kursus'=>$kursus,'stase'=>$stase,'ujian'=>$ujian]);
+    }
+
+    public function edit($id)
+    {
+        $id = Crypt::decryptString($id);
+        $res = ResidenModel::where('res_id',$id)->get();
+        return view('adminpages.residen.residen_edit');
     }
 
 
@@ -55,6 +61,7 @@ class ResidenController extends Controller
         $data['tanggal_baca']=date("Y-m-d",strtotime($request->tanggal_baca));
         unset($data['_token']);
         DB::table('makalah')->insert($data);
+        $request->session()->flash('success','Data berhasil diinput');
         return back();
     }
 
@@ -96,9 +103,18 @@ class ResidenController extends Controller
         }
         //sdd($data);
         DB::table('makalah')->where('makalah_id',$mid)->update($data);
+        $request->session()->flash('success','Data berhasil diubah');
         return back();
     }
-    
+
+    public function makalah_destroy(Request $request)
+    {
+        $data=$request->all();
+        DB::table('makalah')->where('res_id',$request->res_id)->where('makalah_id',$request->makalah_id)->limit(1)->delete();
+        $request->session()->flash('success','Data berhasil dihapus');
+        return back();
+    }
+
     public function kursus_create($id)
     {
         $data = DB::table('kursus')->where('res_id',$id)->get();
@@ -123,6 +139,7 @@ class ResidenController extends Controller
         unset($data['_token']);
         // dd($data);
         DB::table('kursus')->insert($data);
+        $request->session()->flash('success','Data berhasil diinput');
         return back();
     }
 
@@ -148,15 +165,18 @@ class ResidenController extends Controller
             $data['end']=date("Y-m-d",strtotime($request->end));
         }
         unset($data['_token']);
-        // dd($data);
         DB::table('kursus')->where('kursus_id',$request->kursus_id)->update($data);
+        $request->session()->flash('success','Data berhasil diubah');
         return back();
-        // dd($request->all());
     }
 
-    public function makalah_destroy(Request $request)
+
+    public function kursus_destroy(Request $request)
     {
-        dd($request->all());
+        $data=$request->all();
+        DB::table('kursus')->where('res_id',$request->res_id)->where('kursus_id',$request->kursus_id)->limit(1)->delete();
+        $request->session()->flash('success','Data berhasil dihapus');
+        return redirect('residen/kursus/create/'.$request->res_id);
     }
    
     public function ujian_create($id)
@@ -203,6 +223,14 @@ class ResidenController extends Controller
         return back();
     }
 
+    public function ujian_destroy(Request $request)
+    {
+        $data=$request->all();
+        DB::table('ujian')->where('res_id',$request->res_id)->where('ujian_id',$request->ujian_id)->limit(1)->delete();
+        $request->session()->flash('success','Data berhasil dihapus');
+        return redirect('residen/ujian/create/'.$request->res_id);
+    }
+
     public function stase_create($id)
     {
         $data = DB::table('stase')
@@ -241,9 +269,34 @@ class ResidenController extends Controller
         $tempat_stase = DB::table('tempat_stase')->get();
         $sdet = DB::table('stase')
                 ->leftJoin('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
-                ->where('lokasi_id',$sid)
+                ->where('stase.stase_id',$sid)
                 ->where('res_id',$id)->get();
         return view('adminpages.residen.stase_edit',['id',$id,'vstase'=>$data,'tempat_stase'=>$tempat_stase,'sdet'=>$sdet]);
+    }
+
+    public function stase_update(Request $request)
+    {
+        $Validated = $request->validate([
+            'lokasi_id' => 'required|numeric',
+            'mulai' => 'required',
+            'selesai' => 'required'
+        ]);
+        $data = $request->all();
+        $data['res_id']=Crypt::decryptString($request->res_id);
+        $data['mulai']=date("Y-m-d",strtotime($request->mulai));
+        $data['selesai']=date("Y-m-d",strtotime($request->selesai));
+        unset($data['_token']);
+        DB::table('stase')->where('stase_id',$request->stase_id)->update($data);
+        return back();
+    }
+
+    public function stase_destroy(Request $request)
+    {
+        $data=$request->all();
+        unset($data['_token']);
+        DB::table('stase')->where('stase_id',$request->stase_id)->where('res_id',$request->res_id)->delete();
+        $request->session()->flash('success','Data berhasil dihapus');
+        return redirect('/residen/stase/create/'.$request->res_id);
     }
 
 }

@@ -179,15 +179,15 @@
                         <form action="/logout" method="post">
                             @csrf
                             <div class="modal-footer">
-                                <button type="reset" class="btn btn-success waves-effect" data-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-danger waves-effect">Logout</button>
+                                <button type="reset" class="btn btn-success waves-effect" data-dismiss="modal"><i class="fa fa-window-close"></i> Batal</button>
+                                <button type="submit" class="btn btn-danger waves-effect"><i class="fa fa-sign-out-alt"></i >Logout</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
 
-
+    @yield('mdelete')
 
     <!-- Bootstrap Core Js -->
     <script src="/assets/plugins/bootstrap/js/bootstrap.js"></script>
@@ -234,6 +234,6 @@
     <!-- Demo Js -->
     <script src="/assets/js/demo.js"></script>
 
-    yield('lastScipt')
+    @yield('lastScript')
 </body>
 </html>

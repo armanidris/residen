@@ -15,6 +15,7 @@
     
                     <!--Ujian -->
                     <div class="col-sm-12">
+                    @include('adminpages.residen.success_alert')
                     <div class="card">
                         <div class="header bg-indigo">
                             <h2> <i class="fas fa-chalkboard-teacher"></i> Ujian</h2>
@@ -53,7 +54,7 @@
                                                 </td>
                                                 <td>
                                                     <a href="/residen/ujian/edit/{{ $vurow->res_id }}/{{ $vurow->ujian_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 
-                                                    <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+                                                    <a href="" data-toggle="modal" data-target="#mDelConf" id="delConf" data-res-id="{{ $vurow->res_id }}" data-item-id="{{ $vurow->ujian_id }}"><i class="fa fa-trash" title="Delete"></i></a>
                                                 </td>
                                             </tr>
                                         @endforeach	
@@ -147,5 +148,7 @@
                 </div>
             </div>
         </section>
+        @include('adminpages.residen.delconf',['action'=>'ujian','itemname'=>'ujian_id'])
+
    @endsection
                     

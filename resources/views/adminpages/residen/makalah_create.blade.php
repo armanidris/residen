@@ -16,6 +16,9 @@
     
                     <!--Makalah-->
                     <div class="col-sm-12">
+
+                    @include('adminpages.residen.success_alert')
+
                     <div class="card">
                         <div class="header bg-purple">
                             <h2> <i class="fa fa-book"></i> Makalah</h2>
@@ -60,7 +63,10 @@
                                                     <label for="makalah"><?=$row->bap_makalah=="1"?"Ada":"Tidak";?></label>
                                                 </td>
                                                 <td>{{ $row->nama_pembimbing }}</td>
-                                                <td><a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | <a href=""><i class="fa fa-trash" title="Delete"></i></a></td>
+                                                <td>
+                                                    <a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 
+                                                    <a href="" data-toggle="modal" data-target="#mDelConf" id="delConf" data-res-id="{{ $row->res_id }}" data-item-id="{{ $row->makalah_id }}"><i class="fa fa-trash" title="Delete"></i></a>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -155,6 +161,6 @@
             </div>
         </section>
     
-    
+    @include('adminpages.residen.delconf',['action'=>'makalah','itemname'=>'makalah_id'])
     @endsection
     

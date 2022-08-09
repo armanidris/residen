@@ -16,6 +16,9 @@
     
                     <!--Kursus -->
                     <div class="col-sm-12">
+
+                        @include('adminpages.residen.success_alert')
+
                     <div class="card">
                         <div class="header bg-pink">
                             <h2> <i class="fas fa-chalkboard-teacher"></i> Kursus</h2>
@@ -53,7 +56,7 @@
                                                 </td>
                                                 <td width=61>
                                                     <a href="/residen/kursus/edit/{{ $vkrow->res_id }}/{{ $vkrow->kursus_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 
-                                                    <a href=""><i class="fa fa-trash" title="Delete"></i></a>
+                                                    <a href="" data-toggle="modal" data-target="#mDelConf" id="delConf" data-res-id="{{ $vkrow->res_id }}" data-item-id="{{ $vkrow->kursus_id }}"><i class="fa fa-trash" title="Delete"></i></a>
                                                 </td>
                                             </tr>
                                        @endforeach	
@@ -158,6 +161,8 @@
             </div>
         </section>
     
+        @include('adminpages.residen.delconf',['action'=>'kursus','itemname'=>'kursus_id'])
+
     
     @endsection
                     
