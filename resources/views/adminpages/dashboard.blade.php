@@ -93,8 +93,8 @@
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="/profile/{{ session('iduser') }}"><i class="material-icons">person</i>My Profile</a>
-                            <li><a href="/password/{{ session('iduser') }}"><i class="material-icons">lock</i>Ganti password</a>
+                            <li><a href="/profile/{{ Crypt::encryptString(auth()->user()->id) }}"><i class="material-icons">person</i>My Profile</a>
+                            <li><a href="/password/{{ Crypt::encryptString(auth()->user()->id) }}"><i class="material-icons">lock</i>Ganti password</a>
                             <li role="separator" class="divider"></li>
                             <li><a data-toggle="modal" data-target="#defaultModal"><i class="material-icons">input</i>Logout</a></li>
                         </ul>

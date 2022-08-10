@@ -62,7 +62,7 @@
                                                     <input id="makalah" type="checkbox" disabled class="filled-in chk-col-indigo" {{ $row->bap_makalah=="1"?"checked":"" }}>
                                                     <label for="makalah"><?=$row->bap_makalah=="1"?"Ada":"Tidak";?></label>
                                                 </td>
-                                                <td>{{ $row->nama_pembimbing }}</td>
+                                                <td>{{ @$row->pembimbing->nama_pembimbing }}</td>
                                                 <td>
                                                     <a href="/residen/makalah/edit/{{ $row->res_id }}/{{ $row->makalah_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 
                                                     <a href="" data-toggle="modal" data-target="#mDelConf" id="delConf" data-res-id="{{ $row->res_id }}" data-item-id="{{ $row->makalah_id }}"><i class="fa fa-trash" title="Delete"></i></a>
@@ -140,7 +140,7 @@
                                     <div class="row clearfix">
                                         <div class="col-sm-2">Pembimbing</div>
                                         <div class="col-sm-8">
-                                            <select name="pembimbing" class="form-control show-tick"  data-live-search="true" data-size="10">
+                                            <select name="pembimbing_id" class="form-control show-tick"  data-live-search="true" data-size="10">
                                                 <option value=0 style="margin-left:20px;" >--Pilih--</option>
                                                 @foreach ($pembimbing as $prow) { ?>
                                                 <option  style="margin-left:20px;" value="{{ $prow->id }}"> {{ $prow->nama_pembimbing }}</option>

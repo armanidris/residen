@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agama;
+use App\Models\Makalah;
+use App\Models\Kursus;
+use App\Models\Pembimbing;
 use App\Models\ResidenModel;
+use App\Models\Stase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -25,31 +30,76 @@ class ResidenController extends Controller
         $res = ResidenModel::where('res_id',$id)->get();
         $request->session()->put('res_name',$res[0]->res_name);
         
-        $makalah = DB::table('makalah')
-                    ->leftjoin('pembimbing','makalah.pembimbing','=','pembimbing.id')
-                    ->where('res_id',$id)->get();
-        $ujian = DB::table('ujian')->where('res_id',$id)->get();
-        $kursus = DB::table('kursus')->where('res_id',$id)->get();
-        $stase = DB::table('stase')
-                ->join('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
-                ->where('res_id',$id)->get();
-         return view('adminpages.residen.detail',['res'=>$res,'makalah'=>$makalah,'kursus'=>$kursus,'stase'=>$stase,'ujian'=>$ujian]);
+         return view('adminpages.residen.detail',['res'=>$res]);
     }
 
-    public function edit($id)
+    public function create()
+    {
+        $agama = Agama::all();
+        $pembimbing = Pembimbing::all();
+        return view('adminpages.residen.residen_create',['agama'=>$agama,'pembimbing'=>$pembimbing]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'res_name'=>'required',
+            'tahun_masuk'=>'required',
+            'tanggal_lahir'=>'required'
+        ]);  
+        
+        $data = $request->all();
+        unset($data['_token']);
+        $data['tahun_masuk'] = date("Y-m-d",strtotime($request->tahun_masuk));
+        $data['tanggal_lahir'] = date("Y-m-d",strtotime($request->tanggal_lahir));
+        ResidenModel::create($data);
+        $message = 'Berhasil menambahkan data '. $request->res_name ;
+        $request->session()->flash('success',$message);
+        return redirect('/residen');
+    }
+
+    public function edit(Request $request, $id)
     {
         $id = Crypt::decryptString($id);
         $res = ResidenModel::where('res_id',$id)->get();
-        return view('adminpages.residen.residen_edit');
+        $request->session()->put('res_name',$res[0]->res_name);
+        $agama = DB::table('agama')->get();
+        $pembimbing = DB::table('pembimbing')->get();
+        return view('adminpages.residen.residen_edit',['residen_bedah'=>$res,'agama'=>$agama,'pembimbing'=>$pembimbing]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'res_name' => 'required',
+            'tanggal_lahir' => 'required',
+            'tahun_masuk' => 'required',
+            'file_foto' => 'image|file|max:1024'
+        ]);
+
+
+        $data=$request->all();
+        $res_id=Crypt::decryptString($data['res_id']);
+        $data['tanggal_lahir']=date('Y-m-d',strtotime($data['tanggal_lahir']));
+        $data['tahun_masuk']=date('Y-m-d',strtotime($data['tahun_masuk']));
+        $data['res_id']=$res_id;
+        unset($data['_token']);
+        if ($request->file('file_foto')) {
+            $data['file_foto'] = $request->file('file_foto')->store('res-photos');
+        }
+        DB::table('residen_bedah')->where('res_id',$res_id)->update($data);
+
+
+        $request->session()->flash('success','Data berhasil diubah');
+        return back();
     }
 
 
     public function makalah_create($id)
     {
-        $makalah = DB::table('makalah')
-                    ->leftjoin('pembimbing','makalah.pembimbing','=','pembimbing.id')
-                    ->where('res_id',$id)->get();
+        $makalah = Makalah::where('res_id',$id)->get();
         $pembimbing = DB::table('pembimbing')->get();
+        foreach ($makalah as $row);
         return view('adminpages.residen.makalah_create',['id',$id,'vmakalah'=>$makalah,'pembimbing'=>$pembimbing]);
 
     }
@@ -60,23 +110,18 @@ class ResidenController extends Controller
         $data['res_id']=Crypt::decryptString($request->res_id);
         $data['tanggal_baca']=date("Y-m-d",strtotime($request->tanggal_baca));
         unset($data['_token']);
-        DB::table('makalah')->insert($data);
+        Makalah::create($data);
         $request->session()->flash('success','Data berhasil diinput');
         return back();
     }
 
     public function makalah_edit($id,$mid)
     {
-        $makalah = DB::table('makalah')
-                    ->leftjoin('pembimbing','makalah.pembimbing','=','pembimbing.id')
-                    ->where('res_id',$id)->get();
+        $makalah = Makalah::where('res_id',$id)->get();
         $pembimbing = DB::table('pembimbing')->get();
-        $detmakalah = DB::table('makalah')
-                    ->leftjoin('pembimbing','makalah.pembimbing','=','pembimbing.id')
-                    ->where('res_id',$id)
+        $detmakalah = Makalah::where('res_id',$id)
                     ->where('makalah_id',$mid)
                     ->get();
-        
         return view('adminpages.residen.makalah_edit',['id',$id,'vmakalah'=>$makalah,'pembimbing'=>$pembimbing,'detmakalah'=>$detmakalah]);
 
     }
@@ -101,8 +146,7 @@ class ResidenController extends Controller
         if (!key_exists('bap_makalah',$data)) {
             $data['bap_makalah'] = 0;
         }
-        //sdd($data);
-        DB::table('makalah')->where('makalah_id',$mid)->update($data);
+        Makalah::where('makalah_id',$mid)->update($data);
         $request->session()->flash('success','Data berhasil diubah');
         return back();
     }
@@ -112,12 +156,12 @@ class ResidenController extends Controller
         $data=$request->all();
         DB::table('makalah')->where('res_id',$request->res_id)->where('makalah_id',$request->makalah_id)->limit(1)->delete();
         $request->session()->flash('success','Data berhasil dihapus');
-        return back();
+        return redirect('/residen/makalah/create/'. $request->res_id );
     }
 
     public function kursus_create($id)
     {
-        $data = DB::table('kursus')->where('res_id',$id)->get();
+        $data = Kursus::where('res_id',$id)->get();
         return view('adminpages.residen.kursus_create',['id',$id,'vkursus'=>$data]);
 
     }
@@ -138,15 +182,15 @@ class ResidenController extends Controller
         }
         unset($data['_token']);
         // dd($data);
-        DB::table('kursus')->insert($data);
+        Kursus::insert($data);
         $request->session()->flash('success','Data berhasil diinput');
         return back();
     }
 
     public function kursus_edit($id,$kid)
     {
-        $data = DB::table('kursus')->where('res_id',$id)->get();
-        $detail = DB::table('kursus')->where('kursus_id',$kid)->where('res_id',$id)->get();
+        $data = Kursus::where('res_id',$id)->get();
+        $detail = Kursus::where(['kursus_id'=>$kid,'res_id'=>$id])->get();
         return view('adminpages.residen.kursus_edit',['id'=>$id,'vkursus'=>$data,'kdet'=>$detail]);
 
     }
@@ -165,7 +209,7 @@ class ResidenController extends Controller
             $data['end']=date("Y-m-d",strtotime($request->end));
         }
         unset($data['_token']);
-        DB::table('kursus')->where('kursus_id',$request->kursus_id)->update($data);
+        Kursus::where('kursus_id',$request->kursus_id)->update($data);
         $request->session()->flash('success','Data berhasil diubah');
         return back();
     }
@@ -233,9 +277,7 @@ class ResidenController extends Controller
 
     public function stase_create($id)
     {
-        $data = DB::table('stase')
-                ->leftJoin('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
-                ->where('res_id',$id)->get();
+        $data = Stase::where('res_id',$id)->get();
         $tempat_stase = DB::table('tempat_stase')->get();
         return view('adminpages.residen.stase_create',['id',$id,'vstase'=>$data,'tempat_stase'=>$tempat_stase]);
 
@@ -263,14 +305,9 @@ class ResidenController extends Controller
 
     public function stase_edit($id, $sid)
     {
-        $data = DB::table('stase')
-                ->leftJoin('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
-                ->where('res_id',$id)->get();
+        $data = Stase::where('res_id',$id)->get();
         $tempat_stase = DB::table('tempat_stase')->get();
-        $sdet = DB::table('stase')
-                ->leftJoin('tempat_stase','stase.lokasi_id','=','tempat_stase.lokasi_id')
-                ->where('stase.stase_id',$sid)
-                ->where('res_id',$id)->get();
+        $sdet = Stase::where(['stase.stase_id'=>$sid,'res_id'=>$id])->get();
         return view('adminpages.residen.stase_edit',['id',$id,'vstase'=>$data,'tempat_stase'=>$tempat_stase,'sdet'=>$sdet]);
     }
 

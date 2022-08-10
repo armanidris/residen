@@ -5,6 +5,8 @@
     <div class="container-fluid">
         <div class="row clearfix">
             <div class="col-sm-12">
+				@include('adminpages.residen.success_alert')
+
                 <div class="card">
                     <div class="header bg-red">
                         <h2> <i class="fa fa-university"></i> Residen Bedah</h2>
@@ -12,7 +14,7 @@
                     <div class="body">
 						<div class="row clearfix">
 							<div class="col-sm-12">
-								<a class="btn btn-primary" href=""><i class="fas fa-user-plus"></i> Tambah </a> 
+								<a class="btn btn-primary" href="/residen/create"><i class="fas fa-user-plus"></i> Tambah </a> 
 							</div>
 						</div>
 						<div class="table-responsive">

@@ -22,7 +22,7 @@
                                 <dl class="dl-horizontal">
                                     <dt></dt>
                                     <dd>
-                                        <img src="/assets/images/foto/{{ $res[0]->file_foto }}" class="img-rounded" style="width:90px; height:120; border:solid 1px;">
+                                        <img src="{{ asset('storage/'.$res[0]->file_foto) }}" class="img-rounded" style="width:90px; height:120; border:solid 1px;">
                                     </dd>
                                     <p><br></p>
                                     
@@ -76,7 +76,7 @@
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>Agama</dt>
-                                    <dd><?=$res[0]->agama;?></dd>
+                                    <dd><?=@$res[0]->agama->agama;?></dd>
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>Universitas Asal</dt>
@@ -84,7 +84,7 @@
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>Penasehat Akademik</dt>
-                                    <dd><?=$res[0]->nama_pembimbing;?></dd>
+                                    <dd><?=$res[0]->pembimbing->nama_pembimbing;?></dd>
                                 </dl>
                             </div>
                             </div>
@@ -118,7 +118,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									@foreach ($makalah as $mrow)
+									@foreach ($res[0]->makalah as $mrow)
 										<tr>
 											<td>
 												{{-- <a href="<?= base_url('/index.php/residen/makalah/'.sha1($mrow->res_id)."/edit/".$mrow->makalah_id); ?>" title="Edit"><i class="fa fa-edit"></i></a> | <a href="<?= base_url('/index.php/residen/makalah/delete/'.sha1($mrow->makalah_id).'/'.sha1($mrow->res_id)); ?>"><i class="fa fa-trash" title="Delete"></i></a> --}}
@@ -142,7 +142,7 @@
 												<input id="baca" type="checkbox" disabled class="filled-in chk-col-indigo" {{ $mrow->bap_makalah=="1"?"checked":"" }}>
 												<label for="baca">{{ $mrow->bap_makalah=="1"?"Ada":"Tidak" }}</label>
 											</td>
-											<td>{{ $mrow->nama_pembimbing }}</td>
+											<td>{{ @$mrow->pembimbing->nama_pembimbing }}</td>
 										</tr>
 									@endforeach
 									</tbody>
@@ -177,7 +177,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									@foreach ($kursus as $krow)
+									@foreach ($res[0]->kursus as $krow)
 										<tr>
 											<td>
 												<a href="/residen/kursus/edit/{{ $krow->res_id }}/{{ $krow->kursus_id }}" title="Edit"><i class="fa fa-edit"></i></a>
@@ -230,7 +230,7 @@
 										</tr>
 									</thead>
 									<tbody>
-									@foreach ($ujian as $urow)
+									@foreach ($res[0]->ujian as $urow)
 										<tr>
 											<td>
 												<a href="/residen/ujian/edit/{{ $urow->res_id }}/{{ $urow->ujian_id }}" title="Edit"><i class="fa fa-edit"></i></a>
@@ -278,13 +278,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach ($stase as $srow)
+                                        @foreach ($res[0]->stase as $srow)
                                             <tr>
                                                 <td>
                                                     <a href="" title="Edit"><i class="fa fa-edit"></i></a>
                                                 </td>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td> {{  $srow->lokasi_stase }}</td>
+                                                <td> {{  @$srow->tempatstase->lokasi_stase }}</td>
                                                 <td> {{ date("d F Y",strtotime($srow->mulai))." - ".date("d F Y",strtotime($srow->selesai)) }} </td>
                                             </tr>
                                         @endforeach

@@ -41,7 +41,7 @@
                                         @foreach ($vstase as $vsrow) 
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $vsrow->lokasi_stase }}</td>
+                                                <td>{{ @$vsrow->tempatstase->lokasi_stase }}</td>
                                                 <td> {{ date("d F Y",strtotime($vsrow->mulai)) ." - ". date("d F Y",strtotime($vsrow->selesai)) }} </td>
                                                 <td>
                                                     <a href="/residen/stase/edit/{{ $vsrow->res_id }}/{{ $vsrow->stase_id }}" title="Edit"><i class="fa fa-edit"></i></a> | 

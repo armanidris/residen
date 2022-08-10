@@ -47,8 +47,11 @@ Route::post('/mpembimbing/edit/{id}',[MasterController::class,'pembimbing_update
 Route::post('/mpembimbing/destroy/{id}',[MasterController::class,'pembimbing_destroy'])->middleware('auth');
 
 Route::get('/residen',[ResidenController::class,'index'])->middleware('auth');
+Route::get('/residen/create',[ResidenController::class,'create'])->middleware('auth');
+Route::post('/residen/create',[ResidenController::class,'store'])->middleware('auth');
 Route::get('/residen/{id}',[ResidenController::class,'show'])->middleware('auth');
 Route::get('/residen/edit/{id}',[ResidenController::class,'edit'])->middleware('auth');
+Route::post('/residen/edit/{id}',[ResidenController::class,'update'])->middleware('auth');
 
 Route::get('/residen/makalah/create/{id}',[ResidenController::class,'makalah_create'])->middleware('auth');
 Route::post('/residen/makalah/create/{id}',[ResidenController::class,'makalah_store'])->middleware('auth');
