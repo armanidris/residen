@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pembimbing;
+use App\Models\TempatStase;
+use App\Models\ResidenModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Intranet extends Controller
 {
@@ -13,7 +17,23 @@ class Intranet extends Controller
      */
     public function index()
     {
-        return view('landingpages/home');
+        $data['total_residen']=ResidenModel::select(DB::raw('count(res_id) as total'))->get();
+        $data['pembimbing']=Pembimbing::select(DB::raw('count(*) as total'))->get();
+        $data['tempat_stase']=TempatStase::select(DB::raw('count(*) as total'))->get();
+        $data['sex']=ResidenModel::select(DB::raw('count(res_id) as total'))
+                        ->groupBy('sex')
+                        ->get();
+        $data['tahun_masuk']=ResidenModel::select(DB::raw('tahun_masuk, count(*) as total'))
+                        ->groupBy('tahun_masuk')
+                        ->get();
+        $data['semester']=DB::table('residen_bedah')
+                                ->select(DB::raw('smt,count(*) as total,smt_no'))
+                                ->join('semester','residen_bedah.smt','=','semester.smt_romawi')
+                                ->groupBy(['smt','smt_no'])
+                                ->orderBy('smt_no')
+                                ->get();
+
+        return view('landingpages/statistik',['data'=>$data]);
     }
 
     /**
