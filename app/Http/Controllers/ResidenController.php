@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agama;
-use App\Models\Makalah;
+use App\Models\Stase;
 use App\Models\Kursus;
+use App\Models\Makalah;
+use PDF;
 use App\Models\Pembimbing;
 use App\Models\ResidenModel;
-use App\Models\Stase;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -30,7 +31,7 @@ class ResidenController extends Controller
         $res = ResidenModel::where('res_id',$id)->get();
         $request->session()->put('res_name',$res[0]->res_name);
         
-         return view('adminpages.residen.detail',['res'=>$res]);
+         return view('adminpages.residen.residen_detail',['res'=>$res]);
     }
 
     public function create()
@@ -92,6 +93,23 @@ class ResidenController extends Controller
 
         $request->session()->flash('success','Data berhasil diubah');
         return back();
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $id = Crypt::decryptString($id);
+        ResidenModel::where('res_id',$id)->delete();
+
+        $request->session()->flash('success','Data berhasil dihapus');
+        return redirect('/residen');
+    }
+
+    public function printPdf ($id)
+    {
+        $id = Crypt::decryptString($id);
+        $data = ResidenModel::where('res_id',$id)->get();
+        $pdf = PDF::loadView('adminpages.residen.residen_print',['data'=>$data]);
+        return $pdf->download('print-pdf.pdf');
     }
 
 

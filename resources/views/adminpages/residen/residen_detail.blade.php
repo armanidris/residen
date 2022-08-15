@@ -30,7 +30,7 @@
                                     <dd>
                                        {{$res[0]->res_name}}
                                         <a style="margin-left: 50px;" href="/residen/edit/{{ Request::segment(2) }}"><i class="fa fa-edit"></i></a>
-                                        <a target="_blank" href="/print_pdf/create_pdf/"><i class="fa fa-print"></i></a>
+                                        <a target="_blank" href="/residen/printpdf/{{ session('res_id') }}"><i class="fa fa-print"></i></a>
                                     </dd>
                                     <?php //$this->session->set_userdata('res_name',$data->res_name);?>
                                 </dl>

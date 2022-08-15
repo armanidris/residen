@@ -5,7 +5,7 @@
             <form method="POST" action="/residen/{{ $action }}/delete">
                 @csrf
                 <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Modal title</h4>
+                <h4 class="modal-title" id="defaultModalLabel">Konfirmasi hapus data</h4>
             </div>
             <div class="modal-body">
             Data ini akan dihapus, Anda yakin?

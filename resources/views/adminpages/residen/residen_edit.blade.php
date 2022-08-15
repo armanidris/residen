@@ -214,10 +214,9 @@
                                 </div>
                                 <form action="/residen/delete/{{ session('res_id') }}" method="post">
                                     @csrf
-                                    {{-- <input type="hidden" name="nama_pembimbing" value="{{ $data[0]->nama_pembimbing }}"> --}}
                                     <div class="modal-footer">
-                                        <button type="reset" class="btn btn-success waves-effect" data-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-danger waves-effect">Hapus</button>
+                                        <button type="reset" class="btn btn-success waves-effect" data-dismiss="modal"><i class="fa fa-window-close"></i> Batal</button>
+                                        <button type="submit" class="btn btn-danger waves-effect"><i class="fa fa-check"></i> Hapus</button>
                                     </div>
                                 </form>
                             </div>

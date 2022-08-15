@@ -52,6 +52,8 @@ Route::post('/residen/create',[ResidenController::class,'store'])->middleware('a
 Route::get('/residen/{id}',[ResidenController::class,'show'])->middleware('auth');
 Route::get('/residen/edit/{id}',[ResidenController::class,'edit'])->middleware('auth');
 Route::post('/residen/edit/{id}',[ResidenController::class,'update'])->middleware('auth');
+Route::post('/residen/delete/{id}',[ResidenController::class,'destroy'])->middleware('auth');
+Route::get('/residen/printpdf/{id}',[ResidenController::class,'printPdf'])->middleware('auth');
 
 Route::get('/residen/makalah/create/{id}',[ResidenController::class,'makalah_create'])->middleware('auth');
 Route::post('/residen/makalah/create/{id}',[ResidenController::class,'makalah_store'])->middleware('auth');
