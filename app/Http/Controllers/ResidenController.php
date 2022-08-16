@@ -38,7 +38,8 @@ class ResidenController extends Controller
     {
         $agama = Agama::all();
         $pembimbing = Pembimbing::all();
-        return view('adminpages.residen.residen_create',['agama'=>$agama,'pembimbing'=>$pembimbing]);
+        $smt = DB::table('semester')->get();
+        return view('adminpages.residen.residen_create',['agama'=>$agama,'pembimbing'=>$pembimbing,'smt'=>$smt]);
     }
 
     public function store(Request $request)
@@ -46,13 +47,15 @@ class ResidenController extends Controller
         $request->validate([
             'res_name'=>'required',
             'tahun_masuk'=>'required',
-            'tanggal_lahir'=>'required'
+            'tanggal_lahir'=>'required',
+            'smt' => 'required'
         ]);  
         
         $data = $request->all();
+        $data['tahun_masuk'] = $request->tahun_masuk."-".$request->bulan_masuk."-01";
+        $data['tanggal_lahir'] = date("Y-m-d",strtotime($request->tanggal_lahir));        
         unset($data['_token']);
-        $data['tahun_masuk'] = date("Y-m-d",strtotime($request->tahun_masuk));
-        $data['tanggal_lahir'] = date("Y-m-d",strtotime($request->tanggal_lahir));
+        unset($data['bulan_masuk']);
         ResidenModel::create($data);
         $message = 'Berhasil menambahkan data '. $request->res_name ;
         $request->session()->flash('success',$message);
@@ -66,7 +69,8 @@ class ResidenController extends Controller
         $request->session()->put('res_name',$res[0]->res_name);
         $agama = DB::table('agama')->get();
         $pembimbing = DB::table('pembimbing')->get();
-        return view('adminpages.residen.residen_edit',['residen_bedah'=>$res,'agama'=>$agama,'pembimbing'=>$pembimbing]);
+        $smt = DB::table('semester')->get();
+        return view('adminpages.residen.residen_edit',['residen_bedah'=>$res,'agama'=>$agama,'pembimbing'=>$pembimbing,'smt'=>$smt]);
     }
 
     public function update(Request $request)
@@ -82,9 +86,10 @@ class ResidenController extends Controller
         $data=$request->all();
         $res_id=Crypt::decryptString($data['res_id']);
         $data['tanggal_lahir']=date('Y-m-d',strtotime($data['tanggal_lahir']));
-        $data['tahun_masuk']=date('Y-m-d',strtotime($data['tahun_masuk']));
+        $data['tahun_masuk'] = $request->tahun_masuk."-".$request->bulan_masuk."-01";
         $data['res_id']=$res_id;
         unset($data['_token']);
+        unset($data['bulan_masuk']);
         if ($request->file('file_foto')) {
             $data['file_foto'] = $request->file('file_foto')->store('res-photos');
         }

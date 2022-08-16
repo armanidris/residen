@@ -90,20 +90,31 @@
                                         <div class="col-sm-4">
                                             <b>Tahun Masuk</b>
                                             <div class="form-group ">
-                                                <div class="form-line" id="bs_datepicker_container">
-                                                    <input type="text" required autocomplete="off"  class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk') }}">
+                                                    <div class="row">
+                                                    <div class="col-sm-8">
+                                                        <select class="form-control" name="bulan_masuk">
+                                                            <option value="01">Januari</option>
+                                                            <option value="07">Juli</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <input type="number" required autocomplete="off"  class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk',date("Y",strtotime('now'))) }}">
+                                                    </div>
+                                                    </div>
                                                 </div>
                                                 @error('tahun_masuk')
                                                     <small><p class="col-pink">{{ $message }}</p></small>
                                                 @enderror                                                
-                                            </div>
+                                            
                                         </div>
                                         <div class="col-sm-4">
                                             <b>Semester</b>
                                             <div class="form-group form-float ">
-                                                <div class="form-line">
-                                                    <input type="text" class="form-control" name="smt" value="{{ old('smt') }}">
-                                                </div>
+                                                   <select name="smt" class="form-group show-tick">
+                                                    @foreach ($smt as $s)
+                                                        <option value="{{ old('smt') }}">{{ $s->smt_romawi }}</option>
+                                                    @endforeach
+                                                   </select>
                                             </div>
                                         </div>
     
