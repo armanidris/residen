@@ -89,36 +89,35 @@
                                         </div>
                                         <div class="col-sm-4">
                                             <b>Tahun Masuk</b>
-                                            <div class="form-group ">
-                                                    <div class="row">
-                                                    <div class="col-sm-8">
-                                                        <select class="form-control" name="bulan_masuk">
-                                                            <option value="01">Januari</option>
-                                                            <option value="07">Juli</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <input type="number" required autocomplete="off"  class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk',date("Y",strtotime('now'))) }}">
-                                                    </div>
-                                                    </div>
+                                            <div class="form-group form-float">
+                                                <div class="col-sm-8">
+                                                    <select class="form-control" name="bulan_masuk">
+                                                        <option value="01" {{ old('bulan_masuk'=="01"?"selected":"") }}>Januari</option>
+                                                        <option value="07" {{ old('bulan_masuk'=="01"?"selected":"") }}>Juli</option>
+                                                    </select>
                                                 </div>
+                                                <div class="col-sm-4">
+                                                    <input type="number" required autocomplete="off"  class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk',date("Y",strtotime('now'))) }}">
+                                                </div>
+                                            </div>
                                                 @error('tahun_masuk')
                                                     <small><p class="col-pink">{{ $message }}</p></small>
                                                 @enderror                                                
-                                            
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
                                             <b>Semester</b>
                                             <div class="form-group form-float ">
-                                                   <select name="smt" class="form-group show-tick">
+                                                <div class="">
+                                                   <select name="smt" class="form-control">
                                                     @foreach ($smt as $s)
                                                         <option value="{{ old('smt') }}">{{ $s->smt_romawi }}</option>
                                                     @endforeach
                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
     
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
                                             <b>Pangkat / Golongan</b>
                                             <div class="form-group form-float">
                                                 <div class="form-line">
@@ -153,12 +152,14 @@
                                         <div class="col-sm-3">
                                             <b>Jenis Kelamin</b>
                                             <div class="form-group form-float">
-                                                <p><br />
-                                                    <input name="sex" type="radio" class="with-gap" id="radio_3" value="1>
+                                                <div class="">
+                                                    <p><br />
+                                                    <input name="sex" type="radio" class="with-gap" id="radio_3" value="1">
                                                     <label for="radio_3">Pria</label>
                                                     <input name="sex" type="radio" id="radio_4" class="with-gap" value="0">
                                                     <label for="radio_4">Wanita</label>
-                                                </p>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-sm-3">

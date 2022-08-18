@@ -93,7 +93,7 @@
                                             <b>Tahun Masuk</b>
                                             <div class="form-group ">
                                                 <?php $tgl = explode("-",$row->tahun_masuk); ?>
-                                                <div class="row">
+                                                {{-- <div class=""> --}}
                                                     <div class="col-sm-8">
                                                         <select class="form-control" name="bulan_masuk">
                                                             <option value="01" {{ $tgl[1]=="01"?"selected":"" }}>Januari</option>
@@ -103,17 +103,17 @@
                                                     <div class="col-sm-4">
                                                         <input type="number" required autocomplete="off"  class="form-control" name="tahun_masuk" value="{{ old('tahun_masuk',$tgl[0]) }}">
                                                     </div>
-                                                    </div>
+                                                {{-- </div> --}}
                                                 @error('tahun_masuk')
                                                     <small><p class="col-pink">{{ $message }}</p></small>
                                                 @enderror                                                
                                             </div>
                                         </div>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
                                             <b>Semester</b>
                                             <div class="form-group form-float ">
-                                                <div class="form-line">
-                                                    <select name="smt">
+                                                <div class="">
+                                                    <select name="smt" class="form-control">
                                                         @foreach ($smt as $s)
                                                         <option {{ old('smt',$s->smt_romawi==$row->smt?"selected":"") }} >{{ $s->smt_romawi }}</option>
                                                         @endforeach
@@ -122,7 +122,7 @@
                                             </div>
                                         </div>
     
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-2">
                                             <b>Pangkat / Golongan</b>
                                             <div class="form-group form-float">
                                                 <div class="form-line">
