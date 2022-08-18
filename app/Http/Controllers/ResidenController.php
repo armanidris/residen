@@ -9,6 +9,7 @@ use App\Models\Makalah;
 use PDF;
 use App\Models\Pembimbing;
 use App\Models\ResidenModel;
+use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
@@ -359,4 +360,19 @@ class ResidenController extends Controller
         return redirect('/residen/stase/create/'.$request->res_id);
     }
 
+    public function massedit (Request $request)
+    {
+        $lsmt = DB::table('semester')->get();
+        $min_smt = DB::table('residen_bedah')
+                    ->selectRaw('smt,min(smt_no) as no ')
+                    ->join('semester','residen_bedah.smt',"=","semester.smt_romawi","left")
+                    ->groupBy('smt')
+                    ->orderBy('smt_no')
+                    ->limit(1)
+                    ->get();
+        $request->session()->put('smt',$min_smt[0]->smt);
+        // dd($min_smt[0]->smt);
+        $list_residen = ResidenModel::where('smt',$min_smt[0]->smt)->get();
+        return view('adminpages.residen.massedit',['list_smt'=>$lsmt,'list_residen'=>$list_residen]);
+    }
 }

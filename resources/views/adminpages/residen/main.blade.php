@@ -45,7 +45,7 @@
 						<div class="row clearfix">
 							<div class="col-sm-12">
 								<p><br /></p>
-								<a class="btn btn-warning" href=""><i class="fa fa-edit"></i><i class="fa fa-graduation-cap"></i> Ubah semester / lulus </a> 								
+								<a class="btn btn-warning" href="/residen/massedit"><i class="fa fa-edit"></i><i class="fa fa-graduation-cap"></i> Ubah semester / lulus </a> 								
 							</div>
 						</div>
                     </div>
