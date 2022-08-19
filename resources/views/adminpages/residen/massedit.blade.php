@@ -17,9 +17,13 @@
 							</div>
 						</div>
 						<?php $ssmt=session('smt');	?>
+                        {{-- <pre>
+                        <?php print_r($list_residen); ?>
+                        </pre> --}}
 						<form method="post" enctype="multipart/form-data">
+                            @csrf
 						Pilih semester saat ini :
-						<select name="semester" class="show-tick" onchange="this.form.submit();">
+						<select name="semester" onchange="this.form.submit();">
 							@foreach ($list_smt as $row)
                             <option {{ @$ssmt==@$row->smt_romawi?"selected":""}}>{{ $row->smt_romawi }}</option>
 							@endforeach
@@ -27,13 +31,14 @@
 						</form>
 						<p><br /></p>
 						<form class="form-horizontal" method="post" enctype="multipart/form-data">
+                            @csrf
 							<div class="row clearfix">
 								<div class="col-sm-4"></div>
 								<div class="col-sm-1"><strong>Semester</strong></div>
 								<div class="col-sm-2"></div>
 								<div class="col-sm-1"><strong>Lulus</strong></div>
 							</div>
-							<?php foreach ($list_residen as $rrow) { ?>
+							@foreach ($list_residen as $rrow)
 							<input type=hidden name="res_id[]" value="<?=$rrow->res_id;?>">
 							<div class="row clearfix">
 								<div class="col-sm-4"><?=$rrow->res_name;?></div>
@@ -48,7 +53,7 @@
 									</select>
 								</div>
 							</div>
-							<?php } ?>
+							@endforeach
 							<button class="btn btn-primary m-t-15 waves-effect"><i class="fa fa-check"></i> Save</button>
 						</form>
 						<?php //print_r($list_smt);?>

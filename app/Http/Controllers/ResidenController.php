@@ -362,17 +362,37 @@ class ResidenController extends Controller
 
     public function massedit (Request $request)
     {
-        $lsmt = DB::table('semester')->get();
-        $min_smt = DB::table('residen_bedah')
-                    ->selectRaw('smt,min(smt_no) as no ')
-                    ->join('semester','residen_bedah.smt',"=","semester.smt_romawi","left")
-                    ->groupBy('smt')
-                    ->orderBy('smt_no')
-                    ->limit(1)
-                    ->get();
-        $request->session()->put('smt',$min_smt[0]->smt);
-        // dd($min_smt[0]->smt);
-        $list_residen = ResidenModel::where('smt',$min_smt[0]->smt)->get();
-        return view('adminpages.residen.massedit',['list_smt'=>$lsmt,'list_residen'=>$list_residen]);
+        if ($request->isMethod('post'))  {
+            // dd($request->all());
+
+            if (isset($request->res_id)) {
+                $req = $request->all();
+                unset ($req['_token']);
+                $i=0;
+                $tid = count ($req['res_id']);
+                    for ($i=0;$i<$tid;$i++) {
+                        ResidenModel::where('res_id',$req['res_id'][$i])->update(['smt'=>$req['smt'][$i],'lulus'=>$req['lulus'][$i]]);
+                    }
+                } else {
+
+                    $request->session()->put('smt',$request->semester); 
+                    // dd (session('smt'));
+                }
+                return redirect('/residen/massedit');            
+        } else {
+            $lsmt = DB::table('semester')->get();
+            $min_smt = DB::table('residen_bedah')
+                        ->selectRaw('smt,min(smt_no) as no ')
+                        ->join('semester','residen_bedah.smt',"=","semester.smt_romawi","left")
+                        ->groupBy('smt')
+                        ->orderBy('smt_no')
+                        ->limit(1)
+                        ->get();
+            if (empty(session('smt'))) {
+                $request->session()->put('smt',$min_smt[0]->smt);
+            }
+            $list_residen = ResidenModel::where('smt',session('smt'))->get();
+            return view('adminpages.residen.massedit',['list_smt'=>$lsmt,'list_residen'=>$list_residen]);
+        }
     }
 }

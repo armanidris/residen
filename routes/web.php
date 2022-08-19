@@ -50,7 +50,7 @@ Route::get('/residen',[ResidenController::class,'index'])->middleware('auth');
 Route::get('/residen/create',[ResidenController::class,'create'])->middleware('auth');
 Route::post('/residen/create',[ResidenController::class,'store'])->middleware('auth');
 Route::get('/residen/massedit',[ResidenController::class,'massedit'])->middleware('auth');
-Route::post('/residen/massedit',[ResidenController::class,'massupdate'])->middleware('auth');
+Route::post('/residen/massedit',[ResidenController::class,'massedit'])->middleware('auth');
 Route::get('/residen/{id}',[ResidenController::class,'show'])->middleware('auth');
 Route::get('/residen/edit/{id}',[ResidenController::class,'edit'])->middleware('auth');
 Route::post('/residen/edit/{id}',[ResidenController::class,'update'])->middleware('auth');
