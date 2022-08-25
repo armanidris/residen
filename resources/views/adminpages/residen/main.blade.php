@@ -36,7 +36,7 @@
 										<td><a href="/residen/{{ Crypt::encryptString($row->res_id) }}">{{ $row->res_name }} </a></td>
 										<td>{{  $row->smt }}</td>
 										<td>{{ date("F Y",strtotime($row->tahun_masuk)) }} </td>
-										<td>{{ $row->pembimbing->nama_pembimbing }}</td>
+										<td>{{ @$row->pembimbing->nama_pembimbing }}</td>
 									</tr>
 									@endforeach
 								</tbody>
