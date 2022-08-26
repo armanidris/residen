@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\ResidenController;
+use App\Http\Controllers\PMakalahController;
 
 /*
 |--------------------------------------------------------------------------
@@ -80,3 +81,5 @@ Route::post('/residen/stase/create/{id}',[ResidenController::class,'stase_store'
 Route::get('/residen/stase/edit/{id}/{ujid}',[ResidenController::class,'stase_edit'])->middleware('auth');
 Route::post('/residen/stase/edit/{id}/{ujid}',[ResidenController::class,'stase_update'])->middleware('auth');
 Route::post('/residen/stase/delete',[ResidenController::class,'stase_destroy'])->middleware('auth');
+
+Route::get('/pembimbing_makalah',[PMakalahController::class,'index'])->middleware('auth');

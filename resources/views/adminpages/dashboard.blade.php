@@ -119,7 +119,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/index.php/makalah">
+                        <a href="/pembimbing_makalah">
                             <i class="material-icons">question_answer</i>
                             <span>Pembimbing Makalah</span>
                         </a>
