@@ -38,5 +38,6 @@ class ResidenModel extends Model
     }
 
     protected $guarded = ['res_id'];
+    public $timestamps = false;
 }
 

@@ -84,7 +84,7 @@
                                 </dl>
                                 <dl class="dl-horizontal">
                                     <dt>Penasehat Akademik</dt>
-                                    <dd><?=$res[0]->pembimbing->nama_pembimbing;?></dd>
+                                    <dd><?=@$res[0]->pembimbing->nama_pembimbing;?></dd>
                                 </dl>
                             </div>
                             </div>

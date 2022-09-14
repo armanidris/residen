@@ -22,6 +22,8 @@ use App\Http\Controllers\PMakalahController;
 */
 
 Route::get('/', [Intranet::class,'index']);
+Route::get('/residen/pshow',[ResidenController::class,'pshow']);
+Route::post('/residen/pshow',[ResidenController::class,'pshow']);
 Route::get('/login', [LoginController::class,'index'])->name('login')->middleware('guest');
 Route::post('/logout', [LoginController::class,'logout']);
 Route::post('/login', [LoginController::class,'authenticate']);
@@ -57,6 +59,7 @@ Route::get('/residen/edit/{id}',[ResidenController::class,'edit'])->middleware('
 Route::post('/residen/edit/{id}',[ResidenController::class,'update'])->middleware('auth');
 Route::post('/residen/delete/{id}',[ResidenController::class,'destroy'])->middleware('auth');
 Route::get('/residen/printpdf/{id}',[ResidenController::class,'printPdf'])->middleware('auth');
+
 
 Route::get('/residen/makalah/create/{id}',[ResidenController::class,'makalah_create'])->middleware('auth');
 Route::post('/residen/makalah/create/{id}',[ResidenController::class,'makalah_store'])->middleware('auth');

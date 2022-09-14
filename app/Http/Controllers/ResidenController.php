@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use PDF;
 use App\Models\Agama;
 use App\Models\Stase;
 use App\Models\Kursus;
 use App\Models\Makalah;
-use PDF;
 use App\Models\Pembimbing;
+use Illuminate\Support\Arr;
 use App\Models\ResidenModel;
-use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Cache\RateLimiting\Limit;
 
 class ResidenController extends Controller
 {
+    private $rom = [ 'I'=>1, 'II'=>2, 'III'=>3, 'IV'=>4, 'V'=>5, 'VI'=>6, 'VII'=>7, 'VIII'=>8, 'IX'=>9, 'X'=>10, 'XI'=>11, 'XII'=>12, 'XIII'=>13, 'XIV'=>14, 'XV'=>15, 'XVI'=>16, 'XVII'=>17, 'XVIII'=>18, 'XIX'=>19, 'XX'=>20 ];
+
     public function index(Request $request)
     {
         $request->session()->forget('res_id');
         $request->session()->forget('res_name');
-        $res = ResidenModel::all();
+        $res = ResidenModel::orderBy('smt_nomor','DESC')->get();
         return view('adminpages.residen.main',['data'=>$res]);
     }
 
@@ -51,10 +54,12 @@ class ResidenController extends Controller
             'tanggal_lahir'=>'required',
             'smt' => 'required'
         ]);  
+
         
         $data = $request->all();
         $data['tahun_masuk'] = $request->tahun_masuk."-".$request->bulan_masuk."-01";
-        $data['tanggal_lahir'] = date("Y-m-d",strtotime($request->tanggal_lahir));        
+        $data['tanggal_lahir'] = date("Y-m-d",strtotime($request->tanggal_lahir));     
+        $data['smt_nomor']=Arr::get($this->rom,$request->smt);
         unset($data['_token']);
         unset($data['bulan_masuk']);
         ResidenModel::create($data);
@@ -83,12 +88,12 @@ class ResidenController extends Controller
             'file_foto' => 'image|file|max:1024'
         ]);
 
-
         $data=$request->all();
         $res_id=Crypt::decryptString($data['res_id']);
         $data['tanggal_lahir']=date('Y-m-d',strtotime($data['tanggal_lahir']));
         $data['tahun_masuk'] = $request->tahun_masuk."-".$request->bulan_masuk."-01";
         $data['res_id']=$res_id;
+        $data['smt_nomor'] = Arr::get($this->rom,$request->smt);
         unset($data['_token']);
         unset($data['bulan_masuk']);
         if ($request->file('file_foto')) {
@@ -371,7 +376,8 @@ class ResidenController extends Controller
                 $i=0;
                 $tid = count ($req['res_id']);
                     for ($i=0;$i<$tid;$i++) {
-                        ResidenModel::where('res_id',$req['res_id'][$i])->update(['smt'=>$req['smt'][$i],'lulus'=>$req['lulus'][$i]]);
+                        $req['smt_nomor'][$i]=Arr::get($this->rom,$req['smt'][$i]);
+                        ResidenModel::where('res_id',$req['res_id'][$i])->update(['smt'=>$req['smt'][$i],'lulus'=>$req['lulus'][$i],'smt_nomor'=>$req['smt_nomor'][$i]]);
                     }
                 } else {
 
@@ -393,6 +399,23 @@ class ResidenController extends Controller
             }
             $list_residen = ResidenModel::where('smt',session('smt'))->get();
             return view('adminpages.residen.massedit',['list_smt'=>$lsmt,'list_residen'=>$list_residen]);
+        }
+    }
+
+    public function pshow(Request $request)
+    {
+        if ($request->isMethod('post'))  {
+            $data = ResidenModel::where('res_name','like','%'.$request->res_name.'%')->get();
+            if (count($data) == 1) {
+                return view('adminpages.residen.pshow',['data'=>$data]);
+            } else if (count($data) > 1) {
+                return view('adminpages.residen.pshow',['list'=>$data]);
+            } else {
+                $request->session()->flash('info','Data tidak ditemukan');
+                return redirect('/residen/pshow');
+            }
+        } else {
+            return view('adminpages.residen.pshow');
         }
     }
 }

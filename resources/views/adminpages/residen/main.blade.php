@@ -9,7 +9,7 @@
 
                 <div class="card">
                     <div class="header bg-red">
-                        <h2> <i class="fa fa-university"></i> Residen Bedah</h2>
+                        <h2> <i class="fa fa-user-md"></i> Residen Bedah</h2>
                     </div>
                     <div class="body">
 						<div class="row clearfix">
@@ -45,7 +45,7 @@
 						<div class="row clearfix">
 							<div class="col-sm-12">
 								<p><br /></p>
-								<a class="btn btn-warning" href="/residen/massedit"><i class="fa fa-edit"></i><i class="fa fa-graduation-cap"></i> Ubah semester / lulus </a> 								
+								<a class="btn btn-warning" href="/residen/massedit"><i class="fa fa-edit"></i> Ubah semester / lulus </a> 								
 							</div>
 						</div>
                     </div>

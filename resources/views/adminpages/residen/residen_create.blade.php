@@ -93,7 +93,7 @@
                                                 <div class="col-sm-8">
                                                     <select class="form-control" name="bulan_masuk">
                                                         <option value="01" {{ old('bulan_masuk'=="01"?"selected":"") }}>Januari</option>
-                                                        <option value="07" {{ old('bulan_masuk'=="01"?"selected":"") }}>Juli</option>
+                                                        <option value="07" {{ old('bulan_masuk'=="07"?"selected":"") }}>Juli</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-4">

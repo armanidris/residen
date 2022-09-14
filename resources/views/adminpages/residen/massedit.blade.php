@@ -8,7 +8,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="header bg-orange">
-                        <h2> <i class="fa fa-edit"></i><i class="fa fa-graduation-cap"></i> Edit semester / lulus</h2>
+                        <h2> <i class="fa fa-edit"></i></i> Edit semester / lulus</h2>
                     </div>
                     <div class="body table-responsive">
 						<div class="card">
