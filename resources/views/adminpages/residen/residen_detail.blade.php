@@ -22,7 +22,18 @@
                                 <dl class="dl-horizontal">
                                     <dt></dt>
                                     <dd>
-                                        <img src="{{ asset('storage/'.$res[0]->file_foto) }}" class="img-rounded" style="width:90px; height:120; border:solid 1px;">
+										@php 
+											if (!is_null($res[0]->file_foto)) {
+												$foto_residen = $res[0]->file_foto;
+											} else {
+												if ($res[0]->sex==1) {
+													$foto_residen = "male.png";
+												} else {
+													$foto_residen = "female.png";
+												}
+											}
+										@endphp 
+                                        <img src="/images/photos/{{ $foto_residen }}" class="img-rounded" style="width:90px; height:120; border:solid 1px;">
                                     </dd>
                                     <p><br></p>
                                     

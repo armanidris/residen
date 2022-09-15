@@ -11,6 +11,8 @@ use App\Models\Pembimbing;
 use Illuminate\Support\Arr;
 use App\Models\ResidenModel;
 use Illuminate\Http\Request;
+// use Intervention\Image\ImageManagerStatic as Image;
+use Image;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -97,7 +99,17 @@ class ResidenController extends Controller
         unset($data['_token']);
         unset($data['bulan_masuk']);
         if ($request->file('file_foto')) {
-            $data['file_foto'] = $request->file('file_foto')->store('res-photos');
+            $file = $request->file('file_foto');
+            $fileResize = Image::make($file->path());
+            $fileName = $request->tahun_masuk."-".str_replace(' ','_',$file->getClientOriginalName());
+            $destinationPath = public_path().'/images/photos';
+            $fileResize->resize(256, 256, function ($constraint) {
+                $constraint->aspectRatio();
+            }
+        );
+            $fileResize->save($destinationPath.'/'.$fileName);
+            // $file->move($destinationPath,$fileName);
+            $data['file_foto'] = $fileName;
         }
         DB::table('residen_bedah')->where('res_id',$res_id)->update($data);
 
