@@ -23,8 +23,10 @@
                                     <dt></dt>
                                     <dd>
 										@php 
-											if (!is_null($res[0]->file_foto)) {
-												$foto_residen = $res[0]->file_foto;
+											$file_foto = $res[0]->file_foto;
+											$test=file_exists(public_path().'/images/photos/'.$file_foto);
+											if (!is_null($file_foto) && ($test == TRUE)) {
+												$foto_residen = $file_foto;
 											} else {
 												if ($res[0]->sex==1) {
 													$foto_residen = "male.png";
