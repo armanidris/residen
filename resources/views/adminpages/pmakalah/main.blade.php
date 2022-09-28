@@ -11,23 +11,25 @@
                         <h2> <i class="fa fa-university"></i> Daftar Pembimbing Makalah</h2>
                     </div>
                     <div class="body table-responsive">
-							<a href="index.php/makalah"><i class="fas fa-sort-numeric-up"></i> Berdasarkan Residen</a> &nbsp;  &nbsp; &nbsp; 
-							<a href="index.php/makalah/pembimbing"><i class="fas fa-sort-alpha-up"></i> Berdasarkan Pembimbing</a>
+                        <a href="/pembimbing_makalah/rekap"><i class="fas fa-th-list"></i> Rekap</a> | 
+                        <a href="/pembimbing_makalah"><i class="fas fa-table"></i> Detail</a> 
                         <p><br /><br /></p>
 						<table class="table table-bordered table-striped table-hover js-basic-example dataTable">
                             <thead>
                                 <tr>
+                                    <th>Pembimbing</th>
                                     <th>Nama Residen</th>
                                     <th>Makalah</th>
-                                    <th>Pembimbing</th>
+                                    <th>Judul</th>
                                 </tr>
                             </thead>
 							<tbody>
                                 @foreach ($data as $d)
                                 <tr>
-                                    <td>{{ $d->res_name }}</td>
-                                    <td></td>
                                     <td>{{ @$d->pembimbing->nama_pembimbing }}</td>
+                                    <td>{{ @$d->residen->res_name }}</td>
+                                    <td>{{ @$d->makalah_type }}</td>
+                                    <td>{{ @$d->judul }}</td>
                                 </tr>
                                 @endforeach
 							</tbody>

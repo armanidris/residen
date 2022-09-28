@@ -124,7 +124,6 @@
                             <span>Pembimbing Makalah</span>
                         </a>
                     </li>
-					<p><br /><br /></p>
 					<li class="header">Settings</li>
                      <li>
                         <a href="/mpembimbing">

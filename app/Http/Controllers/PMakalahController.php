@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Makalah;
 use App\Models\ResidenModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PMakalahController extends Controller
 {
@@ -14,8 +16,16 @@ class PMakalahController extends Controller
      */
     public function index()
     {
-        $res = ResidenModel::all();
-        return view('adminpages.pmakalah.main',['data'=> $res]);
+        $ser = Makalah::select('pembimbing_id',DB::raw('count(*) as total'))
+                ->groupBy('pembimbing_id')
+                ->get();
+        return view('adminpages.pmakalah.rekap',['data'=> $ser]);
+    }
+
+    public function detail()
+    {
+        $res = Makalah::all();
+        return view('adminpages.pmakalah.main',['data'=>$res]);
     }
 
     /**

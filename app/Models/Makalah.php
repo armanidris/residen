@@ -14,6 +14,10 @@ class Makalah extends Model
     {
         return $this->belongsTo(Pembimbing::class,'pembimbing_id','id');
     }
+    public function residen()
+    {
+        return $this->belongsTo(ResidenModel::class,'res_id','res_id');
+    }
 
     protected $guarded = ['makalah_id'];
     public $timestamps = false;

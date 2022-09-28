@@ -86,3 +86,4 @@ Route::post('/residen/stase/edit/{id}/{ujid}',[ResidenController::class,'stase_u
 Route::post('/residen/stase/delete',[ResidenController::class,'stase_destroy'])->middleware('auth');
 
 Route::get('/pembimbing_makalah',[PMakalahController::class,'index'])->middleware('auth');
+Route::get('/pembimbing_makalah/detail',[PMakalahController::class,'detail'])->middleware('auth');
